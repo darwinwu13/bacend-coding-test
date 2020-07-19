@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha tests",
-    "start": "node index.js"
+    "start": "node index.js",
+    "doc": "node doc.js"
   },
   "keywords": [
     "Xendit"
