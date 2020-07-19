@@ -1,5 +1,9 @@
 # API Documentation
 
+Requirement :
+1. Ensure `node (>8.6 and <= 10)` and `npm` are installed
+2. run `npm install` in root directory
+
 To see a web page version please run this in terminal
 
 ```
