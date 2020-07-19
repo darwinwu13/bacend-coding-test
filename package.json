@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha tests",
+    "test": "nyc mocha tests",
     "start": "node index.js",
     "doc": "node doc.js",
     "pretest": "eslint --ignore-path .eslintignore ."
@@ -30,6 +30,7 @@
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
     "mocha": "^6.1.4",
+    "nyc": "^15.1.0",
     "supertest": "^4.0.2"
   }
 }
