@@ -11,7 +11,7 @@ module.exports = (db) => {
     app.disable('etag');
     /**
      * @api {get} /health Health check Web Server
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName HealthCheck
      * @apiGroup Utility
      *
@@ -29,7 +29,7 @@ module.exports = (db) => {
 
     /**
      * @api {post} /rides Start a New Ride
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName NewRides
      * @apiGroup Rides
      *
@@ -170,7 +170,7 @@ module.exports = (db) => {
 
     /**
      * @api {get} /rides Fetch All Rides
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName GetRides
      * @apiGroup Rides
      *
@@ -244,7 +244,7 @@ module.exports = (db) => {
 
     /**
      * @api {get} /rides/:id Fetch Ride Detail
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName GetRideDetail
      * @apiGroup Rides
      *
