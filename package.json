@@ -10,7 +10,8 @@
     "test": "nyc mocha tests",
     "start": "node index.js",
     "doc": "node doc.js",
-    "pretest": "eslint --ignore-path .eslintignore ."
+    "pretest": "eslint --ignore-path .eslintignore .",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "Xendit"
@@ -23,6 +24,7 @@
     "sqlite3": "^4.0.6"
   },
   "devDependencies": {
+    "coveralls": "^3.1.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
