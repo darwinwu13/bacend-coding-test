@@ -1,6 +1,6 @@
 {
   "name": "Backend coding test API Documentation",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "API documentation for Xendit backend coding test",
   "title": "API Documentation",
   "url": "http://localhost:8010",
@@ -9,7 +9,7 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2020-07-19T11:09:27.995Z",
+    "time": "2020-07-20T05:08:50.426Z",
     "url": "http://apidocjs.com",
     "version": "0.23.0"
   }
