@@ -144,11 +144,26 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/rides",
+    "url": "/rides?page=1",
     "title": "Fetch All Rides",
     "version": "1.0.0",
     "name": "GetRides",
     "group": "Rides",
+    "description": "<p>Fetch All Rides with pagination support. Default page size is 10</p>",
+    "parameter": {
+      "fields": {
+        "Query": [
+          {
+            "group": "Query",
+            "type": "Number",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": ""
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success Response": [
