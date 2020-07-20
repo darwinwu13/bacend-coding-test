@@ -3,7 +3,7 @@ define({ "api": [
     "type": "get",
     "url": "/rides/:id",
     "title": "Fetch Ride Detail",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "GetRideDetail",
     "group": "Rides",
     "parameter": {
@@ -22,7 +22,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "curl -i http://localhost:8010/rides/4711",
+        "content": "curl -i http://localhost:8010/rides/1",
         "type": "curl"
       }
     ],
@@ -146,7 +146,7 @@ define({ "api": [
     "type": "get",
     "url": "/rides",
     "title": "Fetch All Rides",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "GetRides",
     "group": "Rides",
     "success": {
@@ -269,7 +269,7 @@ define({ "api": [
     "type": "post",
     "url": "/rides",
     "title": "Start a New Ride",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "NewRides",
     "group": "Rides",
     "parameter": {
@@ -458,7 +458,7 @@ define({ "api": [
     "type": "get",
     "url": "/health",
     "title": "Health check Web Server",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "HealthCheck",
     "group": "Utility",
     "success": {
