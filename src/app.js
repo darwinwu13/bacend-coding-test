@@ -86,14 +86,14 @@ module.exports = (db) => {
    * @apiError (Error Code) SERVER_ERROR There is something wrong with database server
    *
    * @apiErrorExample Validation-Error-Response:
-   *     HTTP/1.1 200 OK
+   *     HTTP/1.1 422 Unprocessable Entity
    *     {
    *       error_code: 'VALIDATION_ERROR',
    *       message:'Rider name must be a non empty string'
    *     }
    *
    * @apiErrorExample Server-Error-Response:
-   *     HTTP/1.1 200 OK
+   *     HTTP/1.1 500 Internal Server Error
    *     {
    *       error_code: 'SERVER_ERROR',
    *       message:'Unknown error'
@@ -111,7 +111,7 @@ module.exports = (db) => {
 
     if (Number.isNaN(startLongitude) || Number.isNaN(startLatitude) || startLatitude < -90
       || startLatitude > 90 || startLongitude < -180 || startLongitude > 180) {
-      return res.send({
+      return res.status(422).send({
         error_code: 'VALIDATION_ERROR',
         message: 'Start latitude and longitude must be between -90 to 90 and -180 to 180 degrees respectively',
       });
@@ -119,28 +119,28 @@ module.exports = (db) => {
 
     if (Number.isNaN(endLongitude) || Number.isNaN(endLatitude) || endLatitude < -90
       || endLatitude > 90 || endLongitude < -180 || endLongitude > 180) {
-      return res.send({
+      return res.status(422).send({
         error_code: 'VALIDATION_ERROR',
         message: 'End latitude and longitude must be between -90 to 90 and -180 to 180 degrees respectively',
       });
     }
 
     if (typeof riderName !== 'string' || riderName.length < 1) {
-      return res.send({
+      return res.status(422).send({
         error_code: 'VALIDATION_ERROR',
         message: 'Rider name must be a non empty string',
       });
     }
 
     if (typeof driverName !== 'string' || driverName.length < 1) {
-      return res.send({
+      return res.status(422).send({
         error_code: 'VALIDATION_ERROR',
         message: 'Driver name must be a non empty string',
       });
     }
 
     if (typeof driverVehicle !== 'string' || driverVehicle.length < 1) {
-      return res.send({
+      return res.status(422).send({
         error_code: 'VALIDATION_ERROR',
         message: 'Driver Vehicle must be a non empty string',
       });
@@ -160,7 +160,7 @@ module.exports = (db) => {
       + 'Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) '
       + 'VALUES (?, ?, ?, ?, ?, ?, ?)', values, (err) => {
       if (err) {
-        return res.send({
+        return res.status(500).send({
           error_code: 'SERVER_ERROR',
           message: 'Unknown error',
         });
@@ -168,7 +168,7 @@ module.exports = (db) => {
 
       db.all('SELECT * FROM Rides WHERE rideID = ?', this.lastID, (error, rows) => {
         if (error) {
-          return res.send({
+          return res.status(500).send({
             error_code: 'SERVER_ERROR',
             message: 'Unknown error',
           });
@@ -226,14 +226,14 @@ module.exports = (db) => {
    * @apiError (Error Code) RIDES_NOT_FOUND_ERROR No rides found in this system
    *
    * @apiErrorExample Server-Error-Response:
-   *     HTTP/1.1 200 OK
+   *     HTTP/1.1 500 Internal Server Error
    *     {
    *       error_code: 'SERVER_ERROR',
    *       message:'Unknown error'
    *     }
    *
    * @apiErrorExample Rides-Not-Found-Error-Response:
-   *     HTTP/1.1 200 OK
+   *     HTTP/1.1 404 Not Found
    *     {
    *       error_code: 'RIDES_NOT_FOUND_ERROR',
    *       message:'Could not find any rides'
@@ -243,14 +243,14 @@ module.exports = (db) => {
   app.get('/rides', (req, res) => {
     db.all('SELECT * FROM Rides', (err, rows) => {
       if (err) {
-        return res.send({
+        return res.status(500).send({
           error_code: 'SERVER_ERROR',
           message: 'Unknown error',
         });
       }
 
       if (rows.length === 0) {
-        return res.send({
+        return res.status(404).send({
           error_code: 'RIDES_NOT_FOUND_ERROR',
           message: 'Could not find any rides',
         });
@@ -305,14 +305,14 @@ module.exports = (db) => {
    * @apiError (Error Code) RIDES_NOT_FOUND_ERROR The <code>id</code> of the rides was not found
    *
    * @apiErrorExample Server-Error-Response:
-   *     HTTP/1.1 200 OK
+   *     HTTP/1.1 500 Internal Server Error
    *     {
    *       error_code: 'SERVER_ERROR',
    *       message:'Unknown error'
    *     }
    *
    * @apiErrorExample Rides-Not-Found-Error-Response:
-   *     HTTP/1.1 200 OK
+   *     HTTP/1.1 404 Not Found
    *     {
    *       error_code: 'RIDES_NOT_FOUND_ERROR',
    *       message:'Could not find any rides'
@@ -322,14 +322,14 @@ module.exports = (db) => {
   app.get('/rides/:id', (req, res) => {
     db.all(`SELECT * FROM Rides WHERE rideID='${req.params.id}'`, (err, rows) => {
       if (err) {
-        return res.send({
+        return res.status(500).send({
           error_code: 'SERVER_ERROR',
           message: 'Unknown error',
         });
       }
 
       if (rows.length === 0) {
-        return res.send({
+        return res.status(404).send({
           error_code: 'RIDES_NOT_FOUND_ERROR',
           message: 'Could not find any rides',
         });

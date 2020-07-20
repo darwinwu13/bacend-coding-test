@@ -129,12 +129,12 @@
       "examples": [
         {
           "title": "Server-Error-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  error_code: 'SERVER_ERROR',\n  message:'Unknown error'\n}",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  error_code: 'SERVER_ERROR',\n  message:'Unknown error'\n}",
           "type": "json"
         },
         {
           "title": "Rides-Not-Found-Error-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  error_code: 'RIDES_NOT_FOUND_ERROR',\n  message:'Could not find any rides'\n}",
+          "content": "HTTP/1.1 404 Not Found\n{\n  error_code: 'RIDES_NOT_FOUND_ERROR',\n  message:'Could not find any rides'\n}",
           "type": "json"
         }
       ]
@@ -252,12 +252,12 @@
       "examples": [
         {
           "title": "Server-Error-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  error_code: 'SERVER_ERROR',\n  message:'Unknown error'\n}",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  error_code: 'SERVER_ERROR',\n  message:'Unknown error'\n}",
           "type": "json"
         },
         {
           "title": "Rides-Not-Found-Error-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  error_code: 'RIDES_NOT_FOUND_ERROR',\n  message:'Could not find any rides'\n}",
+          "content": "HTTP/1.1 404 Not Found\n{\n  error_code: 'RIDES_NOT_FOUND_ERROR',\n  message:'Could not find any rides'\n}",
           "type": "json"
         }
       ]
@@ -441,12 +441,12 @@
       "examples": [
         {
           "title": "Validation-Error-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  error_code: 'VALIDATION_ERROR',\n  message:'Rider name must be a non empty string'\n}",
+          "content": "HTTP/1.1 422 Unprocessable Entity\n{\n  error_code: 'VALIDATION_ERROR',\n  message:'Rider name must be a non empty string'\n}",
           "type": "json"
         },
         {
           "title": "Server-Error-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  error_code: 'SERVER_ERROR',\n  message:'Unknown error'\n}",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  error_code: 'SERVER_ERROR',\n  message:'Unknown error'\n}",
           "type": "json"
         }
       ]
