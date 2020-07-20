@@ -409,7 +409,7 @@ define({ "api": [
             "type": "Datetime",
             "optional": false,
             "field": "rides.created",
-            "description": "<p>Time of the ride was started in format [YYYY-MM-DD HH:mm:ss]</p>"
+            "description": "<p>Time of the ride was started in format[YYYY-MM-DD HH:mm:ss]</p>"
           }
         ]
       },
