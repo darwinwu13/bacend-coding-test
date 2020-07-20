@@ -7,6 +7,30 @@ const { expect } = require('chai');
 const app = require('../src/app')(db);
 const buildSchemas = require('../src/schemas');
 
+function generateRides(number) {
+  context('Generate Rides', () => {
+    for (let i = 1; i <= number; i += 1) {
+      it('should return status code 200 with ride object', (done) => {
+        const req = {
+          start_lat: 50,
+          start_long: 100,
+          end_lat: 50,
+          end_long: 100,
+          rider_name: `Darwin${i}`,
+          driver_name: `Driver A${i}`,
+          driver_vehicle: 'Yamaha N-Max',
+        };
+
+        request(app)
+          .post('/rides')
+          .send(req)
+          .expect('Content-Type', /application\/json/)
+          .expect(200, done);
+      });
+    }
+  });
+}
+
 describe('API tests', () => {
   before((done) => {
     db.serialize((err) => {
@@ -47,6 +71,20 @@ describe('API tests', () => {
           }, done);
       });
     });
+
+    context('GET /rides?page=1', () => {
+      it('should return status code 404', (done) => {
+        request(app)
+          .get('/rides?page=1')
+          .expect('Content-Type', /application\/json/)
+          .expect(404)
+          .expect({
+            error_code: 'RIDES_NOT_FOUND_ERROR',
+            message: 'Could not find any rides',
+          }, done);
+      });
+    });
+
     context('GET /rides/1', () => {
       it('should return status code 404', (done) => {
         request(app)
@@ -470,6 +508,34 @@ describe('API tests', () => {
           .get('/rides/1')
           .expect('Content-Type', /application\/json/)
           .expect(200, done);
+      });
+    });
+
+    context('when there are more than 20 data in database', () => {
+      generateRides(20);
+      context('GET /rides?page=1', () => {
+        it('should return status code 200', (done) => {
+          request(app)
+            .get('/rides?page=1')
+            .expect('Content-Type', /application\/json/)
+            .expect(200, done);
+        });
+      });
+      context('GET /rides?page=2', () => {
+        it('should return status code 200', (done) => {
+          request(app)
+            .get('/rides?page=2')
+            .expect('Content-Type', /application\/json/)
+            .expect(200, done);
+        });
+      });
+      context('GET /rides?page=4 when data is no more than 30', () => {
+        it('should return status code 404', (done) => {
+          request(app)
+            .get('/rides?page=4')
+            .expect('Content-Type', /application\/json/)
+            .expect(404, done);
+        });
       });
     });
   });

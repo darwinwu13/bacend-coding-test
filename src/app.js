@@ -157,8 +157,8 @@ module.exports = (db) => {
     ];
 
     const result = db.run('INSERT INTO '
-      + 'Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) '
-      + 'VALUES (?, ?, ?, ?, ?, ?, ?)', values, (err) => {
+      + 'Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle)'
+      + ' VALUES (?, ?, ?, ?, ?, ?, ?)', values, function (err) {
       if (err) {
         return res.status(500).send({
           error_code: 'SERVER_ERROR',
@@ -166,7 +166,7 @@ module.exports = (db) => {
         });
       }
 
-      db.all('SELECT * FROM Rides WHERE rideID = ?', this.lastID, (error, rows) => {
+      return db.all('SELECT * FROM Rides WHERE rideID = ?', this.lastID, (error, rows) => {
         if (error) {
           return res.status(500).send({
             error_code: 'SERVER_ERROR',
@@ -174,23 +174,21 @@ module.exports = (db) => {
           });
         }
 
-        res.send(rows);
-
-        return true;
+        return res.send(rows);
       });
-
-      return true;
     });
 
     return result;
   });
 
   /**
-   * @api {get} /rides Fetch All Rides
+   * @api {get} /rides?page=1 Fetch All Rides
    * @apiVersion 1.0.0
    * @apiName GetRides
    * @apiGroup Rides
+   * @apiDescription Fetch All Rides with pagination support. Default page size is 10
    *
+   * @apiParam (Query) {Number} [page=1]
    *
    * @apiSuccess (Success Response) {Object[]} rides Array of Object Ride
    * @apiSuccess (Success Response) {Number} rides.rideId The Unique ID of the ride
@@ -241,7 +239,10 @@ module.exports = (db) => {
    *
    */
   app.get('/rides', (req, res) => {
-    db.all('SELECT * FROM Rides', (err, rows) => {
+    const size = 10;
+    const page = Number(req.query.page) || 1;
+    const offset = (page - 1) * size;
+    db.all('SELECT * FROM Rides LIMIT ?,?', offset, size, (err, rows) => {
       if (err) {
         return res.status(500).send({
           error_code: 'SERVER_ERROR',
@@ -256,9 +257,7 @@ module.exports = (db) => {
         });
       }
 
-      res.send(rows);
-
-      return true;
+      return res.send(rows);
     });
   });
 
@@ -335,9 +334,7 @@ module.exports = (db) => {
         });
       }
 
-      res.send(rows);
-
-      return true;
+      return res.send(rows);
     });
   });
 
