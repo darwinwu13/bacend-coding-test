@@ -3,6 +3,8 @@
 const express = require('express');
 const app = express();
 
+const logger = require('./logger');
+
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
@@ -43,13 +45,13 @@ module.exports = (db) => {
      *
      * @apiParamExample {json} Request-Example:
      *      {
-	 *          "start_lat":0,
-	 *          "start_long":0,
-	 *          "end_lat":0,
-	 *          "end_long":0,
-	 *          "rider_name":"Darwin",
-	 *          "driver_name":"Driver1",
-	 *          "driver_vehicle":"Honda CBR"
+     *          "start_lat":0,
+     *          "start_long":0,
+     *          "end_lat":0,
+     *          "end_long":0,
+     *          "rider_name":"Darwin",
+     *          "driver_name":"Driver1",
+     *          "driver_vehicle":"Honda CBR"
      *      }
      *
      *
