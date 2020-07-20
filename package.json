@@ -10,7 +10,7 @@
     "test": "nyc mocha tests",
     "start": "node index.js",
     "doc": "node doc.js",
-    "pretest": "eslint --ignore-path .eslintignore .",
+    "pretest": "eslint --ignore-path .eslintignore  --fix .",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
@@ -25,6 +25,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "coveralls": "^3.1.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.2.0",

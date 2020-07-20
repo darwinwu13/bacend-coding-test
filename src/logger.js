@@ -5,7 +5,7 @@ module.exports = (() => {
     format: format.json(),
     defaultMeta: { service: 'user-service' },
     transports: [
-      new transports.File({ filename: 'error.log', level: 'error' }),
+      new transports.File({ filename: 'error.log', level: 'error', handleExceptions: true }),
       new transports.File({ filename: 'combined.log', handleExceptions: true }),
     ],
 

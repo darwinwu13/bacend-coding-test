@@ -15,5 +15,5 @@ db.serialize(() => {
 
   const app = express(db);
 
-  app.listen(port, () => logger.log(`App started and listening on port ${port}`));
+  app.listen(port, () => logger.info(`App started and listening on port ${port}`));
 });
