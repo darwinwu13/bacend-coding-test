@@ -1,9 +1,28 @@
 const { createLogger, format, transports } = require('winston');
+const util = require('util');
+
+function transform(info) {
+  const information = info;
+  const args = info[Symbol.for('splat')];
+  if (args) {
+    information.message = util.format(info.message, ...args);
+  }
+  return information;
+}
+
+function utilFormatter() { return { transform }; }
 
 module.exports = (() => {
   const logger = createLogger({
-    format: format.json(),
-    defaultMeta: { service: 'user-service' },
+    level: 'debug',
+    format: format.combine(
+      format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
+      utilFormatter(), // <-- this is what changed
+      format.colorize(),
+      format.printf(({
+        level, message, label, timestamp,
+      }) => `${timestamp} ${label || '-'} ${level}: ${message}`),
+    ),
     transports: [
       new transports.File({ filename: 'error.log', level: 'error', handleExceptions: true }),
       new transports.File({ filename: 'combined.log', handleExceptions: true }),
@@ -21,7 +40,6 @@ module.exports = (() => {
   //
   if (process.env.NODE_ENV !== 'production') {
     logger.add(new transports.Console({
-      format: format.simple(),
       handleExceptions: true,
       handleRejections: true,
     }));
