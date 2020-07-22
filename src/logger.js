@@ -11,11 +11,22 @@ function transform(info) {
 }
 
 function utilFormatter() { return { transform }; }
+const errorStackFormat = format((info) => {
+  if (info instanceof Error) {
+    return {
+      ...info,
+      stack: info.stack,
+      message: info.message,
+    };
+  }
+  return info;
+});
 
 module.exports = (() => {
   const logger = createLogger({
     level: 'debug',
     format: format.combine(
+      errorStackFormat(),
       format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
       utilFormatter(), // <-- this is what changed
       format.colorize(),
