@@ -72,6 +72,7 @@ class TestApplication {
           });
         });
       });
+
       describe('#paginate()', () => {
         const ride = new RideModel();
         let cachedRide;
@@ -111,6 +112,47 @@ class TestApplication {
             it('should', async () => {
               const res = await ride.paginate(4);
               expect(res).to.eql([]);
+            });
+          });
+        });
+      });
+
+      describe('SQL Injection tests', () => {
+        describe('#startNewRide()', () => {
+          const ride = new RideModel();
+          context('when sql injected', () => {
+            it('should not return 1', async () => {
+              const data = [
+                '50',
+                100,
+                50,
+                100,
+                'Darwin',
+                'Driver',
+                '\'Yamaha N-Max\');SELECT 1; --',
+              ];
+              try {
+                const res = await ride.startNewRide(data);
+                expect(res).to.not.eql([{ 1: 1 }]);
+                return true;
+              } catch (e) {
+                return true;
+              }
+            });
+          });
+        });
+        describe('#findById()', () => {
+          const ride = new RideModel();
+          context('when sql injected', () => {
+            it('should not return 1', async () => {
+              try {
+                const id = '\'\';SELECT 1; --';
+                const res = await ride.findById(id);
+                expect(res).to.not.eql([{ 1: 1 }]);
+                return true;
+              } catch (e) {
+                return true;
+              }
             });
           });
         });
