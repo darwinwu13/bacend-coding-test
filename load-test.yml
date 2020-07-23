@@ -1,0 +1,40 @@
+config:
+  target: 'http://localhost:8010'
+  phases:
+    - duration: 30
+      arrivalRate: 20
+      rampTo: 140
+    - duration: 30
+      arrivalRate: 140
+      maxVusers: 140
+  ensure:
+    p99: 50
+scenarios:
+  - name: "Health Check"
+    flow:
+      - get:
+          url: "/health"
+  - name: "Start a new ride and fetch the details"
+    flow:
+      - post:
+          url: "/rides"
+          json:
+            start_lat: 0
+            start_long: 0
+            end_lat: 0
+            end_long: 0
+            rider_name: "Darwins"
+            driver_name: "Driver1s"
+            driver_vehicle: "Honda CBR"
+          capture:
+            json: "$.[0]rideID"
+            as: "id"
+      - get:
+          url: "/rides/{{ id }}"
+  - name: "Fetch all rides by page 1"
+    flow:
+      - get:
+          url: "/rides"
+          qs:
+            page: 1
+

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "nyc mocha tests",
+    "test:load": "artillery run load-test.yml",
     "start": "node index.js",
     "doc": "node doc.js",
     "pretest": "eslint --ignore-path .eslintignore  --fix .",
@@ -27,6 +28,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "artillery": "^1.6.1",
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
     "eslint": "^7.5.0",
